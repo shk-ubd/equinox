@@ -1,9 +1,9 @@
 /**
- * Emberglass design-language contract.
+ * Equinox design-language contract.
  *
  * Dark and Light variants must implement this shape so token hierarchy,
  * temperature roles, and semantic meaning stay identical across modes.
- * Light is a first-class daylight counterpart — soft warm-neutral surfaces,
+ * Light is a first-class daylight counterpart — soft warm paper surfaces,
  * never a pure-white invert of Dark.
  */
 
@@ -58,7 +58,7 @@ export interface ForegroundTokens {
  * Contrast model (pro themes win here):
  * - Body text stays bright — hierarchy comes from chroma + hue, not dimming variables
  * - Accents are high-chroma so they read luminous on deep glass
- * Hue families (Emberglass Night Instruments):
+ * Hue families (Equinox instruments):
  * meter amber → actions | x-ray / iceberg blue → structure |
  * silvery purple → types | martini olive-bronze → strings | mint → git only
  *
@@ -66,14 +66,21 @@ export interface ForegroundTokens {
  * type / function / keyword (hero) > string / constant / property > variable > operator > punct > comment
  */
 export interface AccentTokens {
+  /** Control-flow keywords (if/else/await) — Light: violet authority */
   keyword: HexColor;
+  /** Storage / language keywords (const/let/class) — Light: amber */
   storage: HexColor;
   decorator: HexColor;
   tag: HexColor;
   function: HexColor;
   type: HexColor;
+  /** Interfaces — may equal type on Dark */
+  iface: HexColor;
+  /** Enums — may equal type on Dark */
+  enum: HexColor;
   property: HexColor;
   string: HexColor;
+  /** Numbers / coral literals */
   constant: HexColor;
   regex: HexColor;
   escape: HexColor;

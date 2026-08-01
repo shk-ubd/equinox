@@ -1,34 +1,56 @@
 {
-  "name": "emberglass",
-  "displayName": "Emberglass",
-  "description": "A paired design language for code: Emberglass Dark and Emberglass Light — same accent hues, independently WCAG-solved for each canvas. Warm paper light theme; smoked-glass dark theme.",
+  "name": "equinox",
+  "displayName": "Equinox",
+  "description": "A paired dark & light color theme: smoked-glass night and warm parchment day. Temperature-coded syntax, semantic highlighting, and chrome tuned for long sessions.",
   "version": "1.0.0",
-  "publisher": "REPLACE_WITH_YOUR_PUBLISHER_ID",
-  "engines": { "vscode": "^1.85.0" },
+  "publisher": "your-publisher-id",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
   "categories": ["Themes"],
-  "keywords": ["theme", "dark theme", "light theme", "color theme", "semantic highlighting", "wcag", "glass", "paper"],
+  "keywords": [
+    "theme",
+    "dark theme",
+    "light theme",
+    "color theme",
+    "semantic highlighting",
+    "parchment",
+    "warm",
+    "glass"
+  ],
   "icon": "icon.png",
-  "galleryBanner": { "color": "#0E1018", "theme": "dark" },
-  "repository": { "type": "git", "url": "REPLACE_WITH_REPO_URL" },
+  "galleryBanner": {
+    "color": "#0B1016",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_GITHUB_USERNAME/equinox"
+  },
+  "bugs": {
+    "url": "https://github.com/YOUR_GITHUB_USERNAME/equinox/issues"
+  },
+  "homepage": "https://github.com/YOUR_GITHUB_USERNAME/equinox#readme",
   "license": "MIT",
   "contributes": {
     "themes": [
       {
-        "label": "Emberglass Dark",
+        "label": "Equinox Dark",
         "uiTheme": "vs-dark",
-        "path": "./themes/emberglass-dark-color-theme.json"
+        "path": "./themes/equinox-dark-color-theme.json"
       },
       {
-        "label": "Emberglass Light",
+        "label": "Equinox Light",
         "uiTheme": "vs",
-        "path": "./themes/emberglass-light-color-theme.json"
+        "path": "./themes/equinox-light-color-theme.json"
       }
     ]
   },
   "scripts": {
     "build": "tsx scripts/build-theme.ts",
     "package": "npm run build && vsce package",
-    "publish": "npm run build && vsce publish"
+    "publish": "npm run build && vsce publish",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

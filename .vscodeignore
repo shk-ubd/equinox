@@ -9,4 +9,6 @@ node_modules/**
 **/*.map
 **/tsconfig.json
 plan.md
+PUBLISHING.md
 *.vsix
+package-lock.json

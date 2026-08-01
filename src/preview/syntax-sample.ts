@@ -1,7 +1,7 @@
 /**
- * Emberglass syntax preview — open this file when screenshotting or F5-testing.
+ * Equinox syntax preview — open when screenshotting or F5-testing.
  * Exercises: imports, types, classes, decorators, functions, properties,
- * strings, templates, numbers, operators, comments, JSX-ish tags.
+ * strings, templates, numbers, operators, comments.
  */
 
 import { readFileSync } from "node:fs";
@@ -23,7 +23,7 @@ interface User {
 }
 
 const MAX_RETRIES = 3;
-const API_URL = "https://api.emberglass.dev/v1";
+const API_URL = "https://api.equinox.dev/v1";
 
 /**
  * Gold keywords, ember storage, sky functions, periwinkle types.

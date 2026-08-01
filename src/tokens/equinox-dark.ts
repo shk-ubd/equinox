@@ -1,23 +1,21 @@
 /**
- * Emberglass Dark — design-language tokens (single source of truth).
+ * Equinox Dark — design-language tokens (single source of truth).
  *
  * Do not hand-edit themes/*.json. Run `npm run build`.
  *
  * Identity: molten gold on smoked aerospace glass.
- * Comfort-tuned: ~20% softer than the high-contrast pass —
- * readable hierarchy without OLED glare or neon accents.
+ * Comfort-tuned for long sessions — controlled saturation, no neon blowout.
  */
 
 import type { ThemeTokens } from "./types.ts";
 
 export const tokens: ThemeTokens = {
   meta: {
-    name: "Emberglass Dark",
+    name: "Equinox Dark",
     type: "dark",
-    fileName: "emberglass-dark-color-theme.json",
+    fileName: "equinox-dark-color-theme.json",
   },
 
-  // --- Surfaces: soft smoked glass (lifted off pure black)
   bg: {
     base: "#0B1016",
     raised1: "#121925",
@@ -34,7 +32,6 @@ export const tokens: ThemeTokens = {
     findMatchCurrent: "#E8A85E90",
   },
 
-  // --- Foreground: comfortable body, still clear hierarchy
   fg: {
     bright: "#E4E9F0",
     primary: "#C5CDD8",
@@ -45,7 +42,6 @@ export const tokens: ThemeTokens = {
     onAccent: "#0B1016",
   },
 
-  // --- Accents: same families, ~20% less chroma / glare
   accent: {
     keyword: "#E8A85E",
     storage: "#E87248",
@@ -53,6 +49,8 @@ export const tokens: ThemeTokens = {
     tag: "#E8A85E",
     function: "#62B4DC",
     type: "#A8B4F0",
+    iface: "#A8B4F0",
+    enum: "#A8B4F0",
     property: "#62C4D4",
     string: "#C5D07A",
     constant: "#D998C8",

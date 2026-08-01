@@ -1,13 +1,13 @@
 /**
- * Builds all Emberglass theme variants from token sources.
+ * Builds all Equinox theme variants from token sources.
  * GENERATED FILE reminder — do not hand-edit themes/*.json. Always run `npm run build`.
  */
 
 import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { tokens as emberglassDark } from "../src/tokens/emberglass-dark.ts";
-import { tokens as emberglassLight } from "../src/tokens/emberglass-light.ts";
+import { tokens as equinoxDark } from "../src/tokens/equinox-dark.ts";
+import { tokens as equinoxLight } from "../src/tokens/equinox-light.ts";
 import type { ThemeTokens } from "../src/tokens/types.ts";
 import {
   assertNoUndefined,
@@ -18,7 +18,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
 const themesDir = join(root, "themes");
 
-const variants: ThemeTokens[] = [emberglassDark, emberglassLight];
+const variants: ThemeTokens[] = [equinoxDark, equinoxLight];
 
 mkdirSync(themesDir, { recursive: true });
 

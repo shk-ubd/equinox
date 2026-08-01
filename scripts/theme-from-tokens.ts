@@ -1,6 +1,6 @@
 /**
- * Builds a VS Code color theme JSON object from Emberglass ThemeTokens.
- * Shared by every variant (Dark now; Light later) so hierarchy stays identical.
+ * Builds a VS Code color theme JSON object from Equinox ThemeTokens.
+ * Shared by Dark and Light so hierarchy stays identical.
  *
  * GENERATED theme files — do not hand-edit. Always run `npm run build`.
  */
@@ -28,16 +28,28 @@ function withAlpha(hex: string, alpha: string): string {
 export function buildThemeFromTokens(tokens: ThemeTokens) {
   const { bg, fg, accent, status, git, bracket, terminal } = tokens;
   const isLight = tokens.meta.type === "light";
-  const softShadow = isLight ? "#2A243822" : "#00000066";
-  const deepShadow = isLight ? "#2A243833" : "#00000088";
-  const stickyShadow = isLight ? "#2A243818" : "#00000055";
-  const tabActiveBg = isLight ? bg.base : bg.raised2;
+  const softShadow = isLight ? "#2A243828" : "#00000066";
+  const deepShadow = isLight ? "#2A243840" : "#00000088";
+  const stickyShadow = isLight ? "#2A243822" : "#00000055";
+  // Light: active tab darker than strip; Dark: raised chrome
+  const tabActiveBg = isLight ? bg.raised2 : bg.raised2;
+  const tabInactiveBg = isLight ? "#F7F3EC" : bg.raised1;
+  const lineHighlight = isLight ? "#00000014" : bg.raised2;
+  const indentIdle = isLight ? "#D8D1C6" : bg.overlay;
+  const indentActive = isLight ? "#AFA08E" : fg.muted;
+  const bracketMatchBg = isLight ? withAlpha(accent.type, "45") : withAlpha(accent.keyword, "22");
+  const bracketMatchBorder = isLight ? accent.type : accent.keyword;
+  const scrollNormal = isLight ? withAlpha(bg.overlay, "55") : withAlpha(bg.overlay, "99");
+  const scrollHover = isLight ? withAlpha(bg.overlay, "80") : withAlpha(fg.muted, "AA");
+  const scrollActive = isLight ? withAlpha(fg.secondary, "99") : withAlpha(fg.secondary, "CC");
+  const activityActive = isLight ? withAlpha(accent.keyword, "28") : withAlpha(accent.keyword, "12");
+  const cursorFg = isLight ? accent.escape : accent.keyword;
 
   const colors: Record<string, string> = {
     // ── Editor plane ──────────────────────────────────────────────
     "editor.background": requireDefined(bg.base, "bg.base"),
     "editor.foreground": requireDefined(fg.primary, "fg.primary"),
-    "editor.lineHighlightBackground": requireDefined(bg.raised2, "bg.raised2"),
+    "editor.lineHighlightBackground": requireDefined(lineHighlight, "lineHighlight"),
     "editor.lineHighlightBorder": "#00000000",
     "editor.selectionBackground": requireDefined(bg.selection, "bg.selection"),
     "editor.selectionHighlightBackground": requireDefined(
@@ -48,8 +60,8 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
       bg.selectionInactive,
       "bg.selectionInactive"
     ),
-    "editor.wordHighlightBackground": withAlpha(accent.function, "28"),
-    "editor.wordHighlightStrongBackground": withAlpha(accent.keyword, "30"),
+    "editor.wordHighlightBackground": withAlpha(accent.escape, isLight ? "35" : "28"),
+    "editor.wordHighlightStrongBackground": withAlpha(accent.escape, isLight ? "50" : "30"),
     "editor.wordHighlightBorder": "#00000000",
     "editor.wordHighlightStrongBorder": "#00000000",
     "editor.findMatchBackground": requireDefined(bg.findMatchCurrent, "bg.findMatchCurrent"),
@@ -61,17 +73,17 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
     "editor.foldBackground": withAlpha(accent.function, "18"),
     "editor.foldPlaceholderForeground": requireDefined(fg.muted, "fg.muted"),
     "editor.linkedEditingBackground": withAlpha(accent.function, "28"),
-    "editorCursor.foreground": requireDefined(accent.keyword, "accent.keyword"),
+    "editorCursor.foreground": requireDefined(cursorFg, "cursorFg"),
     "editorCursor.background": requireDefined(bg.base, "bg.base"),
-    "editorMultiCursor.primary.foreground": requireDefined(accent.keyword, "accent.keyword"),
+    "editorMultiCursor.primary.foreground": requireDefined(cursorFg, "cursorFg"),
     "editorMultiCursor.secondary.foreground": requireDefined(accent.function, "accent.function"),
     "editorLineNumber.foreground": requireDefined(fg.muted, "fg.muted"),
     "editorLineNumber.activeForeground": requireDefined(fg.bright, "fg.bright"),
-    "editorIndentGuide.background1": requireDefined(bg.overlay, "bg.overlay"),
-    "editorIndentGuide.activeBackground1": requireDefined(fg.muted, "fg.muted"),
+    "editorIndentGuide.background1": requireDefined(indentIdle, "indentIdle"),
+    "editorIndentGuide.activeBackground1": requireDefined(indentActive, "indentActive"),
     "editorWhitespace.foreground": withAlpha(bg.overlay, "88"),
-    "editorBracketMatch.background": withAlpha(accent.keyword, "22"),
-    "editorBracketMatch.border": requireDefined(accent.keyword, "accent.keyword"),
+    "editorBracketMatch.background": bracketMatchBg,
+    "editorBracketMatch.border": requireDefined(bracketMatchBorder, "bracketMatchBorder"),
     "editorRuler.foreground": withAlpha(bg.overlay, "90"),
     "editorOverviewRuler.border": "#00000000",
     "editorOverviewRuler.findMatchForeground": withAlpha(accent.keyword, "AA"),
@@ -113,7 +125,9 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
     "editorBracketPairGuide.activeBackground6": withAlpha(bracket[5], "70"),
 
     "editorError.foreground": requireDefined(status.error, "status.error"),
+    "editorError.background": withAlpha(status.error, isLight ? "18" : "00"),
     "editorWarning.foreground": requireDefined(status.warning, "status.warning"),
+    "editorWarning.background": withAlpha(status.warning, isLight ? "14" : "00"),
     "editorInfo.foreground": requireDefined(status.info, "status.info"),
     "editorHint.foreground": requireDefined(accent.type, "accent.type"),
     "editorUnnecessaryCode.opacity": "#00000088",
@@ -133,18 +147,18 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
 
     // Must stay transparent — opaque minimap.background obscures editor content
     "minimap.background": "#00000000",
-    // Schema requires transparency so markers don't fully obscure minimap text
-    "minimap.findMatchHighlight": withAlpha(accent.keyword, "AA"),
-    "minimap.selectionHighlight": withAlpha(bg.selection, "88"),
-    "minimap.selectionOccurrenceHighlight": withAlpha(bg.selection, "66"),
-    "minimap.errorHighlight": withAlpha(status.error, "AA"),
-    "minimap.warningHighlight": withAlpha(status.warning, "AA"),
+    "minimap.foregroundOpacity": isLight ? "#000000E0" : "#000000C0",
+    "minimap.findMatchHighlight": withAlpha(accent.keyword, "CC"),
+    "minimap.selectionHighlight": withAlpha(bg.selection, "AA"),
+    "minimap.selectionOccurrenceHighlight": withAlpha(bg.selection, "88"),
+    "minimap.errorHighlight": withAlpha(status.error, "CC"),
+    "minimap.warningHighlight": withAlpha(status.warning, "CC"),
     "minimapGutter.addedBackground": requireDefined(git.added, "git.added"),
     "minimapGutter.modifiedBackground": requireDefined(git.modified, "git.modified"),
     "minimapGutter.deletedBackground": requireDefined(git.deleted, "git.deleted"),
-    "minimapSlider.background": withAlpha(bg.overlay, "66"),
-    "minimapSlider.hoverBackground": withAlpha(fg.muted, "66"),
-    "minimapSlider.activeBackground": withAlpha(fg.secondary, "88"),
+    "minimapSlider.background": withAlpha(bg.overlay, isLight ? "80" : "66"),
+    "minimapSlider.hoverBackground": withAlpha(fg.muted, isLight ? "90" : "66"),
+    "minimapSlider.activeBackground": withAlpha(fg.secondary, "AA"),
 
     // ── Activity / sidebar ───────────────────────────────────────
     "activityBar.background": requireDefined(bg.raised1, "bg.raised1"),
@@ -154,7 +168,7 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
     "activityBarBadge.background": requireDefined(accent.keyword, "accent.keyword"),
     "activityBarBadge.foreground": requireDefined(fg.onAccent, "fg.onAccent"),
     "activityBar.activeBorder": requireDefined(accent.keyword, "accent.keyword"),
-    "activityBar.activeBackground": withAlpha(accent.keyword, "12"),
+    "activityBar.activeBackground": activityActive,
     "activityBarTop.foreground": requireDefined(fg.bright, "fg.bright"),
     "activityBarTop.activeBorder": requireDefined(accent.keyword, "accent.keyword"),
     "activityBarTop.inactiveForeground": requireDefined(fg.muted, "fg.muted"),
@@ -188,8 +202,8 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
     "list.errorForeground": requireDefined(status.error, "status.error"),
     "list.warningForeground": requireDefined(status.warning, "status.warning"),
     "list.deemphasizedForeground": requireDefined(fg.disabled, "fg.disabled"),
-    "tree.indentGuidesStroke": requireDefined(bg.overlay, "bg.overlay"),
-    "tree.inactiveIndentGuidesStroke": withAlpha(bg.overlay, "66"),
+    "tree.indentGuidesStroke": requireDefined(indentIdle, "indentIdle"),
+    "tree.inactiveIndentGuidesStroke": withAlpha(indentIdle, isLight ? "AA" : "66"),
 
     // ── Status / title ────────────────────────────────────────────
     "statusBar.background": requireDefined(bg.raised2, "bg.raised2"),
@@ -216,30 +230,37 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
     "titleBar.inactiveForeground": requireDefined(fg.muted, "fg.muted"),
     "titleBar.border": requireDefined(bg.overlay, "bg.overlay"),
 
-    // ── Tabs (Light: active flush with editor; Dark: raised chrome) ─
+    // ── Tabs (Light: darker active + violet top bar) ───────────────
     "tab.activeBackground": requireDefined(tabActiveBg, "tabActiveBg"),
     "tab.activeForeground": requireDefined(fg.bright, "fg.bright"),
-    "tab.inactiveBackground": requireDefined(bg.raised1, "bg.raised1"),
+    "tab.inactiveBackground": requireDefined(tabInactiveBg, "tabInactiveBg"),
     "tab.inactiveForeground": requireDefined(fg.muted, "fg.muted"),
     "tab.border": requireDefined(bg.overlay, "bg.overlay"),
     "tab.activeBorderTop": requireDefined(accent.keyword, "accent.keyword"),
+    "tab.activeBorder": requireDefined(isLight ? tabActiveBg : bg.overlay, "tab.activeBorder"),
     "tab.hoverBackground": requireDefined(bg.hover, "bg.hover"),
     "tab.hoverForeground": requireDefined(fg.bright, "fg.bright"),
     "tab.unfocusedActiveBackground": requireDefined(tabActiveBg, "tabActiveBg"),
     "tab.unfocusedActiveForeground": requireDefined(fg.secondary, "fg.secondary"),
-    "tab.unfocusedInactiveBackground": requireDefined(bg.raised1, "bg.raised1"),
+    "tab.unfocusedInactiveBackground": requireDefined(tabInactiveBg, "tabInactiveBg"),
     "tab.unfocusedInactiveForeground": requireDefined(fg.disabled, "fg.disabled"),
-    "tab.unfocusedActiveBorderTop": withAlpha(accent.keyword, "66"),
+    "tab.unfocusedActiveBorderTop": withAlpha(accent.keyword, "88"),
     "tab.activeModifiedBorder": requireDefined(accent.function, "accent.function"),
     "tab.inactiveModifiedBorder": withAlpha(accent.function, "88"),
-    "editorGroupHeader.tabsBackground": requireDefined(bg.raised1, "bg.raised1"),
+    "editorGroupHeader.tabsBackground": requireDefined(
+      isLight ? tabInactiveBg : bg.raised1,
+      "tabsStrip"
+    ),
     "editorGroupHeader.tabsBorder": requireDefined(bg.overlay, "bg.overlay"),
     "editorGroupHeader.border": requireDefined(bg.overlay, "bg.overlay"),
     "editorGroup.border": requireDefined(bg.overlay, "bg.overlay"),
     "editorGroup.dropBackground": withAlpha(accent.function, "33"),
 
-    // ── Panel ─────────────────────────────────────────────────────
-    "panel.background": requireDefined(bg.raised1, "bg.raised1"),
+    // ── Panel (Problems / Output / Terminal) ───────────────────────
+    "panel.background": requireDefined(
+      isLight ? terminal.background : bg.raised1,
+      "panel.background"
+    ),
     "panel.border": requireDefined(bg.overlay, "bg.overlay"),
     "panelTitle.activeForeground": requireDefined(fg.bright, "fg.bright"),
     "panelTitle.inactiveForeground": requireDefined(fg.muted, "fg.muted"),
@@ -290,14 +311,15 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
     "extensionButton.foreground": requireDefined(fg.onAccent, "fg.onAccent"),
     "extensionButton.hoverBackground": requireDefined(accent.type, "accent.type"),
 
-    "badge.background": requireDefined(accent.function, "accent.function"),
+    // Warm coral badge — prominent counts that fit parchment (not cool blue)
+    "badge.background": requireDefined(accent.constant, "accent.constant"),
     "badge.foreground": requireDefined(fg.onAccent, "fg.onAccent"),
     "progressBar.background": requireDefined(accent.keyword, "accent.keyword"),
 
     "scrollbar.shadow": softShadow,
-    "scrollbarSlider.background": withAlpha(bg.overlay, "99"),
-    "scrollbarSlider.hoverBackground": withAlpha(fg.muted, "AA"),
-    "scrollbarSlider.activeBackground": withAlpha(fg.secondary, "CC"),
+    "scrollbarSlider.background": scrollNormal,
+    "scrollbarSlider.hoverBackground": scrollHover,
+    "scrollbarSlider.activeBackground": scrollActive,
 
     "sash.hoverBorder": requireDefined(accent.keyword, "accent.keyword"),
 
@@ -350,9 +372,9 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
     "editorGhostText.border": "#00000000",
 
     // ── Breadcrumb / peek / merge / diff ──────────────────────────
-    "breadcrumb.foreground": requireDefined(fg.muted, "fg.muted"),
+    "breadcrumb.foreground": requireDefined(fg.secondary, "fg.secondary"),
     "breadcrumb.focusForeground": requireDefined(fg.bright, "fg.bright"),
-    "breadcrumb.activeSelectionForeground": requireDefined(fg.bright, "fg.bright"),
+    "breadcrumb.activeSelectionForeground": requireDefined(accent.keyword, "accent.keyword"),
     "breadcrumbPicker.background": requireDefined(bg.widget, "bg.widget"),
 
     "peekView.border": requireDefined(accent.keyword, "accent.keyword"),
@@ -391,16 +413,13 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
     "gitDecoration.addedResourceForeground": requireDefined(git.added, "git.added"),
     "gitDecoration.modifiedResourceForeground": requireDefined(git.modified, "git.modified"),
     "gitDecoration.deletedResourceForeground": requireDefined(git.deleted, "git.deleted"),
-    "gitDecoration.renamedResourceForeground": requireDefined(accent.property, "accent.property"),
+    "gitDecoration.renamedResourceForeground": requireDefined(git.modified, "git.modified"),
     "gitDecoration.untrackedResourceForeground": requireDefined(git.untracked, "git.untracked"),
     "gitDecoration.conflictingResourceForeground": requireDefined(git.conflict, "git.conflict"),
     "gitDecoration.ignoredResourceForeground": requireDefined(fg.disabled, "fg.disabled"),
-    "gitDecoration.stageModifiedResourceForeground": requireDefined(
-      accent.constant,
-      "accent.constant"
-    ),
+    "gitDecoration.stageModifiedResourceForeground": requireDefined(git.modified, "git.modified"),
     "gitDecoration.stageDeletedResourceForeground": requireDefined(git.deleted, "git.deleted"),
-    "gitDecoration.submoduleResourceForeground": requireDefined(accent.type, "accent.type"),
+    "gitDecoration.submoduleResourceForeground": requireDefined(fg.secondary, "fg.secondary"),
 
     // ── Debug / testing ───────────────────────────────────────────
     "debugToolBar.background": requireDefined(bg.widget, "bg.widget"),
@@ -547,8 +566,15 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
       },
     },
     {
+      // Numbers — coral + bold so literals pop (MAX_RETRIES = 3)
+      scope: ["constant.numeric", "constant.numeric.integer", "constant.numeric.float"],
+      settings: {
+        foreground: requireDefined(accent.constant, "accent.constant"),
+        ...(isLight ? { fontStyle: "bold" } : {}),
+      },
+    },
+    {
       scope: [
-        "constant.numeric",
         "constant.language",
         "constant.other",
         "variable.language",
@@ -565,6 +591,11 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
         "keyword",
         "keyword.control",
         "keyword.control.flow",
+        "keyword.control.conditional",
+        "keyword.control.loop",
+        "keyword.control.switch",
+        "keyword.control.trycatch",
+        "keyword.control.await",
         "keyword.control.import",
         "keyword.control.export",
         "keyword.control.from",
@@ -599,7 +630,24 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
       ],
       settings: {
         foreground: requireDefined(accent.decorator, "accent.decorator"),
-        fontStyle: "italic",
+        fontStyle: "italic bold",
+      },
+    },
+    {
+      // TODO / FIXME / @deprecated / NOTE — annotation badges
+      scope: [
+        "keyword.codetag",
+        "keyword.codetag.notation",
+        "comment.todo",
+        "comment.todo.documentation",
+        "storage.type.class.jsdoc",
+        "entity.name.tag.documentation",
+        "punctuation.definition.block.tag.jsdoc",
+        "variable.other.jsdoc",
+      ],
+      settings: {
+        foreground: requireDefined(accent.decorator, "accent.decorator"),
+        fontStyle: "bold",
       },
     },
     {
@@ -628,15 +676,33 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
         "entity.other.inherited-class",
         "support.class",
         "support.type",
-        "entity.name.namespace",
         "entity.name.scope-resolution",
-        "entity.name.type.interface",
         "entity.name.type.alias",
-        "entity.name.type.enum",
       ],
       settings: {
         foreground: requireDefined(accent.type, "accent.type"),
         ...(isLight ? { fontStyle: "bold" } : {}),
+      },
+    },
+    {
+      scope: ["entity.name.type.interface", "support.type.interface"],
+      settings: {
+        foreground: requireDefined(accent.iface, "accent.iface"),
+        ...(isLight ? { fontStyle: "bold" } : {}),
+      },
+    },
+    {
+      scope: ["entity.name.type.enum", "support.type.enum"],
+      settings: {
+        foreground: requireDefined(accent.enum, "accent.enum"),
+        ...(isLight ? { fontStyle: "bold" } : {}),
+      },
+    },
+    {
+      scope: ["entity.name.namespace"],
+      settings: {
+        foreground: requireDefined(accent.iface, "accent.iface"),
+        fontStyle: "italic",
       },
     },
     {
@@ -648,7 +714,10 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
     {
       scope: ["variable.parameter", "meta.function.parameters"],
       settings: {
-        foreground: requireDefined(fg.primary, "fg.primary"),
+        foreground: requireDefined(
+          isLight ? accent.escape : fg.primary,
+          "parameter"
+        ),
         fontStyle: "italic",
       },
     },
@@ -685,7 +754,8 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
         "meta.template.expression",
       ],
       settings: {
-        foreground: requireDefined(accent.keyword, "accent.keyword"),
+        foreground: requireDefined(accent.escape, "accent.escape"),
+        fontStyle: "bold",
       },
     },
     {
@@ -793,7 +863,7 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
 
   const semanticTokenColors = {
     "variable.readonly": {
-      foreground: requireDefined(accent.constant, "accent.constant"),
+      foreground: requireDefined(accent.escape, "accent.escape"),
     },
     "variable.defaultLibrary": {
       foreground: requireDefined(fg.primary, "fg.primary"),
@@ -801,15 +871,25 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
     variable: {
       foreground: requireDefined(fg.primary, "fg.primary"),
     },
-    parameter: {
+    "variable.local": {
       foreground: requireDefined(fg.primary, "fg.primary"),
+    },
+    parameter: {
+      foreground: requireDefined(
+        isLight ? accent.escape : fg.primary,
+        "parameter"
+      ),
       fontStyle: "italic",
     },
     property: {
       foreground: requireDefined(accent.property, "accent.property"),
     },
     "property.readonly": {
-      foreground: requireDefined(accent.constant, "accent.constant"),
+      foreground: requireDefined(accent.escape, "accent.escape"),
+    },
+    "property.static": {
+      foreground: requireDefined(accent.property, "accent.property"),
+      fontStyle: "italic",
     },
     function: {
       foreground: requireDefined(accent.function, "accent.function"),
@@ -827,31 +907,36 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
       foreground: requireDefined(accent.function, "accent.function"),
       fontStyle: "bold",
     },
+    "method.static": {
+      foreground: requireDefined(accent.function, "accent.function"),
+      fontStyle: "italic",
+    },
     class: {
       foreground: requireDefined(accent.type, "accent.type"),
       fontStyle: "bold",
     },
     interface: {
-      foreground: requireDefined(accent.type, "accent.type"),
+      foreground: requireDefined(accent.iface, "accent.iface"),
       ...(isLight ? { fontStyle: "bold" } : {}),
     },
     enum: {
-      foreground: requireDefined(accent.type, "accent.type"),
+      foreground: requireDefined(accent.enum, "accent.enum"),
       ...(isLight ? { fontStyle: "bold" } : {}),
     },
     enumMember: {
       foreground: requireDefined(accent.constant, "accent.constant"),
+      ...(isLight ? { fontStyle: "italic" } : {}),
     },
     namespace: {
-      foreground: requireDefined(accent.type, "accent.type"),
-      ...(isLight ? { fontStyle: "bold" } : {}),
+      foreground: requireDefined(accent.iface, "accent.iface"),
+      fontStyle: "italic",
     },
     type: {
       foreground: requireDefined(accent.type, "accent.type"),
       ...(isLight ? { fontStyle: "bold" } : {}),
     },
     typeParameter: {
-      foreground: requireDefined(accent.type, "accent.type"),
+      foreground: requireDefined(accent.enum, "accent.enum"),
       fontStyle: "italic",
     },
     struct: {
@@ -860,7 +945,7 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
     },
     decorator: {
       foreground: requireDefined(accent.decorator, "accent.decorator"),
-      fontStyle: "italic",
+      fontStyle: "italic bold",
     },
     macro: {
       foreground: requireDefined(accent.decorator, "accent.decorator"),
@@ -868,6 +953,18 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
     keyword: {
       foreground: requireDefined(accent.keyword, "accent.keyword"),
       ...(isLight ? { fontStyle: "bold" } : {}),
+    },
+    "keyword.control": {
+      foreground: requireDefined(accent.keyword, "accent.keyword"),
+      ...(isLight ? { fontStyle: "bold" } : {}),
+    },
+    "keyword.async": {
+      foreground: requireDefined(accent.storage, "accent.storage"),
+      fontStyle: "italic",
+    },
+    "keyword.static": {
+      foreground: requireDefined(accent.storage, "accent.storage"),
+      fontStyle: "italic",
     },
     operator: {
       foreground: requireDefined(accent.operator, "accent.operator"),
@@ -881,6 +978,7 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
     },
     number: {
       foreground: requireDefined(accent.constant, "accent.constant"),
+      ...(isLight ? { fontStyle: "bold" } : {}),
     },
     regexp: {
       foreground: requireDefined(accent.regex, "accent.regex"),
@@ -889,13 +987,17 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
       foreground: requireDefined(fg.comment, "fg.comment"),
       fontStyle: "italic",
     },
+    "*.deprecated": {
+      foreground: requireDefined(accent.decorator, "accent.decorator"),
+      fontStyle: "bold strikethrough",
+    },
     unused: {
       foreground: requireDefined(fg.disabled, "fg.disabled"),
       fontStyle: "italic",
     },
     deprecated: {
-      foreground: requireDefined(accent.invalid, "accent.invalid"),
-      fontStyle: "strikethrough",
+      foreground: requireDefined(accent.decorator, "accent.decorator"),
+      fontStyle: "bold strikethrough",
     },
   };
 
