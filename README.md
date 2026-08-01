@@ -13,7 +13,7 @@ Both share the same semantic roles (actions → structure → data → docs → 
 
 ## Install
 
-### Marketplace (after publish)
+### Marketplace
 
 1. Extensions (`Ctrl+Shift+X` / `Cmd+Shift+X`)
 2. Search **Equinox**
@@ -37,9 +37,15 @@ Then **Extensions → ⋯ → Install from VSIX…** and choose the generated `.
 }
 ```
 
-## Screenshot
+## Screenshots
 
-![Equinox](images/screenshot-main.png)
+**Equinox Dark**
+
+![Equinox Dark](images/screenshot-dark.png)
+
+**Equinox Light**
+
+![Equinox Light](images/screenshot-light.png)
 
 ## Develop
 

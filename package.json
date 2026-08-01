@@ -3,7 +3,7 @@
   "displayName": "Equinox",
   "description": "A paired dark & light color theme: smoked-glass night and warm parchment day. Temperature-coded syntax, semantic highlighting, and chrome tuned for long sessions.",
   "version": "1.0.0",
-  "publisher": "your-publisher-id",
+  "publisher": "SheikhUbaidUllah",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -25,13 +25,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/YOUR_GITHUB_USERNAME/equinox"
+    "url": "https://github.com/shk-ubd/equinox"
   },
   "bugs": {
-    "url": "https://github.com/YOUR_GITHUB_USERNAME/equinox/issues"
+    "url": "https://github.com/shk-ubd/equinox/issues"
   },
-  "homepage": "https://github.com/YOUR_GITHUB_USERNAME/equinox#readme",
+  "homepage": "https://github.com/shk-ubd/equinox#readme",
   "license": "MIT",
+  "type": "module",
   "contributes": {
     "themes": [
       {
