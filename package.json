@@ -1,0 +1,39 @@
+{
+  "name": "emberglass",
+  "displayName": "Emberglass",
+  "description": "A paired design language for code: Emberglass Dark and Emberglass Light — same accent hues, independently WCAG-solved for each canvas. Warm paper light theme; smoked-glass dark theme.",
+  "version": "1.0.0",
+  "publisher": "REPLACE_WITH_YOUR_PUBLISHER_ID",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Themes"],
+  "keywords": ["theme", "dark theme", "light theme", "color theme", "semantic highlighting", "wcag", "glass", "paper"],
+  "icon": "icon.png",
+  "galleryBanner": { "color": "#0E1018", "theme": "dark" },
+  "repository": { "type": "git", "url": "REPLACE_WITH_REPO_URL" },
+  "license": "MIT",
+  "contributes": {
+    "themes": [
+      {
+        "label": "Emberglass Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/emberglass-dark-color-theme.json"
+      },
+      {
+        "label": "Emberglass Light",
+        "uiTheme": "vs",
+        "path": "./themes/emberglass-light-color-theme.json"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "tsx scripts/build-theme.ts",
+    "package": "npm run build && vsce package",
+    "publish": "npm run build && vsce publish"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@vscode/vsce": "^2.24.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0"
+  }
+}
