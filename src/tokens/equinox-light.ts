@@ -26,8 +26,9 @@ export const tokens: ThemeTokens = {
     inputBorder: "#C4B8A0",
     hover: "#E2DAC8",
     overlay: "#C4B8A0",
-    selection: "#4678FF29",
-    selectionInactive: "#4678FF18",
+    // Warm amber selection (not cool gray/blue)
+    selection: "#D4A06A3D",
+    selectionInactive: "#D4A06A22",
     findMatch: "#D8B54A33",
     findMatchCurrent: "#D8B54A55",
   },
@@ -37,32 +38,37 @@ export const tokens: ThemeTokens = {
     primary: "#3F4658",
     secondary: "#4A453E",
     muted: "#8A847A",
-    comment: "#8D8D8D",
+    // Slightly lighter + warmer for italic comments
+    comment: "#9C968C",
     disabled: "#A8A29A",
     onAccent: "#FAF7F0",
   },
 
   accent: {
-    keyword: "#D11A3A",
-    storage: "#EA580C",
+    // ~12% more contrast than prior crimson/orange
+    keyword: "#B81432",
+    storage: "#D14A0A",
     decorator: "#C026A0",
-    tag: "#D11A3A",
-    function: "#0F766E",
+    tag: "#B81432",
+    // Brighter than variables for scanability
+    function: "#0B8A80",
     type: "#1D4ED8",
     iface: "#1D4ED8",
     enum: "#C026A0",
     property: "#15803D",
-    string: "#4D7C0F",
+    // Softened saturation — less attention pull
+    string: "#5C7A2E",
     constant: "#E85D4C",
     regex: "#C026A0",
     escape: "#0E7490",
     operator: "#6B6560",
     punctuation: "#9A948A",
-    invalid: "#D7263D",
+    // Coral-shifted errors (not pure red)
+    invalid: "#DC5A4A",
   },
 
   status: {
-    error: "#D7263D",
+    error: "#DC5A4A",
     warning: "#E8A317",
     info: "#0F766E",
     success: "#3AA76D",
@@ -71,28 +77,30 @@ export const tokens: ThemeTokens = {
   git: {
     added: "#48B36B",
     modified: "#D97706",
-    deleted: "#E15353",
+    deleted: "#DC5A4A",
     untracked: "#3AA76D",
     conflict: "#E8A317",
   },
 
-  bracket: ["#D11A3A", "#0F766E", "#E85D4C", "#1D4ED8", "#15803D", "#C026A0"],
+  // Slightly more distinct, still muted on parchment
+  bracket: ["#B81432", "#0B8A80", "#E07060", "#1A56C4", "#1A8A45", "#B01E90"],
 
   terminal: {
     background: "#F1ECE3",
     foreground: "#3F4658",
     ansiBlack: "#E8E1D2",
-    ansiRed: "#D7263D",
+    ansiRed: "#DC5A4A",
     ansiGreen: "#3AA76D",
+    // Amber prompt / status accent
     ansiYellow: "#D97706",
     ansiBlue: "#0F766E",
-    ansiMagenta: "#D11A3A",
+    ansiMagenta: "#B81432",
     ansiCyan: "#0E7490",
     ansiWhite: "#4A453E",
     ansiBrightBlack: "#8A847A",
-    ansiBrightRed: "#E15353",
+    ansiBrightRed: "#E07060",
     ansiBrightGreen: "#48B36B",
-    ansiBrightYellow: "#E8A317",
+    ansiBrightYellow: "#B45309",
     ansiBrightBlue: "#1D4ED8",
     ansiBrightMagenta: "#C026A0",
     ansiBrightCyan: "#0E7490",

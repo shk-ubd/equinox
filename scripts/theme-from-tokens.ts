@@ -32,18 +32,28 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
   const deepShadow = isLight ? "#2A243840" : "#00000088";
   const stickyShadow = isLight ? "#2A243822" : "#00000055";
   // Light: active tab darker than strip; Dark: raised chrome
-  const tabActiveBg = isLight ? bg.raised2 : bg.raised2;
-  const tabInactiveBg = isLight ? "#F7F3EC" : bg.raised1;
-  const lineHighlight = isLight ? "#00000014" : bg.raised2;
-  const indentIdle = isLight ? "#D8D1C6" : bg.overlay;
-  const indentActive = isLight ? "#AFA08E" : fg.muted;
-  const bracketMatchBg = isLight ? withAlpha(accent.type, "45") : withAlpha(accent.keyword, "22");
+  // Light: active tab merges with editor; inactive strip reads quieter
+  const tabActiveBg = isLight ? bg.base : bg.raised2;
+  const tabInactiveBg = isLight ? bg.raised2 : bg.raised1;
+  const tabTopAccent = isLight ? git.modified : accent.keyword;
+  // Light: ~8% stronger active line wash
+  const lineHighlight = isLight ? "#2A24381C" : bg.raised2;
+  const indentIdle = isLight ? "#C9BFB0" : bg.overlay;
+  const indentActive = isLight ? "#9A8B76" : fg.muted;
+  // Light: near-transparent fill so the brace glyph stays readable; border carries the cue
+  const bracketMatchBg = isLight ? withAlpha(accent.type, "14") : withAlpha(accent.keyword, "22");
   const bracketMatchBorder = isLight ? accent.type : accent.keyword;
-  const scrollNormal = isLight ? withAlpha(bg.overlay, "55") : withAlpha(bg.overlay, "99");
-  const scrollHover = isLight ? withAlpha(bg.overlay, "80") : withAlpha(fg.muted, "AA");
-  const scrollActive = isLight ? withAlpha(fg.secondary, "99") : withAlpha(fg.secondary, "CC");
+  const scrollNormal = isLight ? withAlpha(bg.overlay, "72") : withAlpha(bg.overlay, "99");
+  const scrollHover = isLight ? withAlpha(bg.overlay, "99") : withAlpha(fg.muted, "AA");
+  const scrollActive = isLight ? withAlpha(fg.secondary, "B3") : withAlpha(fg.secondary, "CC");
   const activityActive = isLight ? withAlpha(accent.keyword, "28") : withAlpha(accent.keyword, "12");
   const cursorFg = isLight ? accent.escape : accent.keyword;
+  const activeLineNumber = isLight ? git.modified : fg.bright;
+  const listActiveBg = isLight ? withAlpha(git.modified, "28") : bg.selection;
+  const listInactiveBg = isLight ? withAlpha(git.modified, "16") : bg.selectionInactive;
+  const listFocusOutline = isLight ? withAlpha(git.modified, "70") : withAlpha(accent.keyword, "60");
+  const bracketGuideIdle = isLight ? "45" : "35";
+  const bracketGuideActive = isLight ? "80" : "70";
 
   const colors: Record<string, string> = {
     // ── Editor plane ──────────────────────────────────────────────
@@ -78,7 +88,7 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
     "editorMultiCursor.primary.foreground": requireDefined(cursorFg, "cursorFg"),
     "editorMultiCursor.secondary.foreground": requireDefined(accent.function, "accent.function"),
     "editorLineNumber.foreground": requireDefined(fg.muted, "fg.muted"),
-    "editorLineNumber.activeForeground": requireDefined(fg.bright, "fg.bright"),
+    "editorLineNumber.activeForeground": requireDefined(activeLineNumber, "activeLineNumber"),
     "editorIndentGuide.background1": requireDefined(indentIdle, "indentIdle"),
     "editorIndentGuide.activeBackground1": requireDefined(indentActive, "indentActive"),
     "editorWhitespace.foreground": withAlpha(bg.overlay, "88"),
@@ -111,18 +121,18 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
       "status.error"
     ),
 
-    "editorBracketPairGuide.background1": withAlpha(bracket[0], "35"),
-    "editorBracketPairGuide.background2": withAlpha(bracket[1], "35"),
-    "editorBracketPairGuide.background3": withAlpha(bracket[2], "35"),
-    "editorBracketPairGuide.background4": withAlpha(bracket[3], "35"),
-    "editorBracketPairGuide.background5": withAlpha(bracket[4], "35"),
-    "editorBracketPairGuide.background6": withAlpha(bracket[5], "35"),
-    "editorBracketPairGuide.activeBackground1": withAlpha(bracket[0], "70"),
-    "editorBracketPairGuide.activeBackground2": withAlpha(bracket[1], "70"),
-    "editorBracketPairGuide.activeBackground3": withAlpha(bracket[2], "70"),
-    "editorBracketPairGuide.activeBackground4": withAlpha(bracket[3], "70"),
-    "editorBracketPairGuide.activeBackground5": withAlpha(bracket[4], "70"),
-    "editorBracketPairGuide.activeBackground6": withAlpha(bracket[5], "70"),
+    "editorBracketPairGuide.background1": withAlpha(bracket[0], bracketGuideIdle),
+    "editorBracketPairGuide.background2": withAlpha(bracket[1], bracketGuideIdle),
+    "editorBracketPairGuide.background3": withAlpha(bracket[2], bracketGuideIdle),
+    "editorBracketPairGuide.background4": withAlpha(bracket[3], bracketGuideIdle),
+    "editorBracketPairGuide.background5": withAlpha(bracket[4], bracketGuideIdle),
+    "editorBracketPairGuide.background6": withAlpha(bracket[5], bracketGuideIdle),
+    "editorBracketPairGuide.activeBackground1": withAlpha(bracket[0], bracketGuideActive),
+    "editorBracketPairGuide.activeBackground2": withAlpha(bracket[1], bracketGuideActive),
+    "editorBracketPairGuide.activeBackground3": withAlpha(bracket[2], bracketGuideActive),
+    "editorBracketPairGuide.activeBackground4": withAlpha(bracket[3], bracketGuideActive),
+    "editorBracketPairGuide.activeBackground5": withAlpha(bracket[4], bracketGuideActive),
+    "editorBracketPairGuide.activeBackground6": withAlpha(bracket[5], bracketGuideActive),
 
     "editorError.foreground": requireDefined(status.error, "status.error"),
     "editorError.background": withAlpha(status.error, isLight ? "18" : "00"),
@@ -183,20 +193,20 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
     "sideBarStickyScroll.background": requireDefined(bg.raised1, "bg.raised1"),
     "sideBarStickyScroll.shadow": stickyShadow,
 
-    "list.activeSelectionBackground": requireDefined(bg.selection, "bg.selection"),
+    "list.activeSelectionBackground": requireDefined(listActiveBg, "listActiveBg"),
     "list.activeSelectionForeground": requireDefined(fg.bright, "fg.bright"),
     "list.activeSelectionIconForeground": requireDefined(fg.bright, "fg.bright"),
     "list.hoverBackground": requireDefined(bg.hover, "bg.hover"),
     "list.hoverForeground": requireDefined(fg.bright, "fg.bright"),
-    "list.inactiveSelectionBackground": requireDefined(
-      bg.selectionInactive,
-      "bg.selectionInactive"
-    ),
+    "list.inactiveSelectionBackground": requireDefined(listInactiveBg, "listInactiveBg"),
     "list.inactiveSelectionForeground": requireDefined(fg.primary, "fg.primary"),
-    "list.focusBackground": requireDefined(bg.selection, "bg.selection"),
+    "list.focusBackground": requireDefined(listActiveBg, "listActiveBg"),
     "list.focusForeground": requireDefined(fg.bright, "fg.bright"),
-    "list.focusOutline": withAlpha(accent.keyword, "60"),
-    "list.highlightForeground": requireDefined(accent.keyword, "accent.keyword"),
+    "list.focusOutline": listFocusOutline,
+    "list.highlightForeground": requireDefined(
+      isLight ? git.modified : accent.keyword,
+      "list.highlight"
+    ),
     "list.filterMatchBackground": requireDefined(bg.findMatch, "bg.findMatch"),
     "list.filterMatchBorder": requireDefined(accent.keyword, "accent.keyword"),
     "list.errorForeground": requireDefined(status.error, "status.error"),
@@ -230,13 +240,16 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
     "titleBar.inactiveForeground": requireDefined(fg.muted, "fg.muted"),
     "titleBar.border": requireDefined(bg.overlay, "bg.overlay"),
 
-    // ── Tabs (Light: darker active + violet top bar) ───────────────
+    // ── Tabs (Light: editor-matched active + amber top accent) ─────
     "tab.activeBackground": requireDefined(tabActiveBg, "tabActiveBg"),
     "tab.activeForeground": requireDefined(fg.bright, "fg.bright"),
     "tab.inactiveBackground": requireDefined(tabInactiveBg, "tabInactiveBg"),
-    "tab.inactiveForeground": requireDefined(fg.muted, "fg.muted"),
+    "tab.inactiveForeground": requireDefined(
+      isLight ? fg.disabled : fg.muted,
+      "tab.inactiveForeground"
+    ),
     "tab.border": requireDefined(bg.overlay, "bg.overlay"),
-    "tab.activeBorderTop": requireDefined(accent.keyword, "accent.keyword"),
+    "tab.activeBorderTop": requireDefined(tabTopAccent, "tabTopAccent"),
     "tab.activeBorder": requireDefined(isLight ? tabActiveBg : bg.overlay, "tab.activeBorder"),
     "tab.hoverBackground": requireDefined(bg.hover, "bg.hover"),
     "tab.hoverForeground": requireDefined(fg.bright, "fg.bright"),
@@ -244,9 +257,12 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
     "tab.unfocusedActiveForeground": requireDefined(fg.secondary, "fg.secondary"),
     "tab.unfocusedInactiveBackground": requireDefined(tabInactiveBg, "tabInactiveBg"),
     "tab.unfocusedInactiveForeground": requireDefined(fg.disabled, "fg.disabled"),
-    "tab.unfocusedActiveBorderTop": withAlpha(accent.keyword, "88"),
-    "tab.activeModifiedBorder": requireDefined(accent.function, "accent.function"),
-    "tab.inactiveModifiedBorder": withAlpha(accent.function, "88"),
+    "tab.unfocusedActiveBorderTop": withAlpha(tabTopAccent, "88"),
+    "tab.activeModifiedBorder": requireDefined(
+      isLight ? git.modified : accent.function,
+      "tab.activeModifiedBorder"
+    ),
+    "tab.inactiveModifiedBorder": withAlpha(isLight ? git.modified : accent.function, "88"),
     "editorGroupHeader.tabsBackground": requireDefined(
       isLight ? tabInactiveBg : bg.raised1,
       "tabsStrip"
@@ -264,7 +280,7 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
     "panel.border": requireDefined(bg.overlay, "bg.overlay"),
     "panelTitle.activeForeground": requireDefined(fg.bright, "fg.bright"),
     "panelTitle.inactiveForeground": requireDefined(fg.muted, "fg.muted"),
-    "panelTitle.activeBorder": requireDefined(accent.keyword, "accent.keyword"),
+    "panelTitle.activeBorder": requireDefined(tabTopAccent, "tabTopAccent"),
     "panelSection.border": requireDefined(bg.overlay, "bg.overlay"),
     "panelSectionHeader.background": requireDefined(bg.raised2, "bg.raised2"),
     "panelSectionHeader.foreground": requireDefined(fg.secondary, "fg.secondary"),
@@ -500,10 +516,13 @@ export function buildThemeFromTokens(tokens: ThemeTokens) {
       "status.success"
     ),
     "terminalCommandDecoration.errorBackground": requireDefined(status.error, "status.error"),
-    "terminalCommandDecoration.defaultBackground": requireDefined(fg.muted, "fg.muted"),
+    "terminalCommandDecoration.defaultBackground": requireDefined(
+      isLight ? git.modified : fg.muted,
+      "terminalCommandDecoration.defaultBackground"
+    ),
 
     // ── Text / settings / misc chrome ─────────────────────────────
-    focusBorder: withAlpha(accent.keyword, "80"),
+    focusBorder: withAlpha(isLight ? git.modified : accent.keyword, "80"),
     foreground: requireDefined(fg.primary, "fg.primary"),
     "selection.background": requireDefined(bg.selection, "bg.selection"),
     descriptionForeground: requireDefined(fg.secondary, "fg.secondary"),

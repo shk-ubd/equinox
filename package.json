@@ -2,7 +2,7 @@
   "name": "equinox",
   "displayName": "Equinox",
   "description": "Paired dark & light themes for VS Code and Cursor — smoked-glass night, warm parchment day. Clear syntax hierarchy and calm chrome for long sessions.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "SheikhUbaidUllah",
   "engines": {
     "vscode": "^1.85.0"
