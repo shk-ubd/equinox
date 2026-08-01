@@ -1,7 +1,7 @@
 {
   "name": "equinox",
   "displayName": "Equinox",
-  "description": "A paired dark & light color theme: smoked-glass night and warm parchment day. Temperature-coded syntax, semantic highlighting, and chrome tuned for long sessions.",
+  "description": "Paired dark & light themes for VS Code and Cursor — smoked-glass night, warm parchment day. Clear syntax hierarchy and calm chrome for long sessions.",
   "version": "1.0.0",
   "publisher": "SheikhUbaidUllah",
   "engines": {
@@ -12,17 +12,20 @@
     "theme",
     "dark theme",
     "light theme",
-    "color theme",
+    "color-theme",
     "semantic highlighting",
+    "comfortable",
     "parchment",
     "warm",
-    "glass"
+    "glass",
+    "equinox"
   ],
   "icon": "icon.png",
   "galleryBanner": {
     "color": "#0B1016",
     "theme": "dark"
   },
+  "pricing": "Free",
   "repository": {
     "type": "git",
     "url": "https://github.com/shk-ubd/equinox"
